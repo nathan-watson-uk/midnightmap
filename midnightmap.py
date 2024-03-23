@@ -292,7 +292,7 @@ def main():
         # Return list of the top 100 domains for the TLD...
         # This will help remove social media and popular ecommerce sites etc
         # TODO Handle if file does not exist
-        top_domains = unpack_domains_from_csv(f"{TOP100_DIR}top_100_{site.lstrip('.')}.csv")
+        top_domains = unpack_domains_from_csv(f"{TOP100_DIR}{site.lstrip('.')}.csv")
 
         # Iterate through every domain and if it is a high ranking domain, remove it
         for domain in final_domain_list:
