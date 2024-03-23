@@ -20,7 +20,7 @@
 ## Known Issues
 
 - Random User Agent Library is not currently showing in PyPi properly, manual installation may be required | https://github.com/Luqman-Ud-Din/random_user_agent
-- /data/top100 is not currently available on GitHub due to the size, this will be fixed shortly
+
 ## Installation
 
 MighdnightMap requires [Python 3 - 3.10+](https://www.python.org/) to run.
