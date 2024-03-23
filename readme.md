@@ -1,7 +1,9 @@
 # MidnightMap
 ## _Uncover Industrial Scale Web Attack Surfaces_
 
-**MidnightMap is a concept CLI tool currently under development**
+_A concept tool currently under development that provides intelligence into the attack surface of web applications
+within geographic regions and/or TLDS_
+
 
 ## Current Features
 
@@ -13,9 +15,10 @@
 
 ## Work In Progress
 
+- Website Tech Stack Analysis - Soon
 - Numerous TLDs in a Single Command
-- Website Tech Stack Analysis
 - Compiled Results
+- Graphical Data Analytics
 
 ## Known Issues
 
