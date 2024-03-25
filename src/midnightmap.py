@@ -22,11 +22,11 @@ user_agent_rotator = UserAgent(software_names=software_names, operating_systems=
 
 # DuckDuckGo Advanced Search - https://duckduckgo.com/duckduckgo-help-pages/settings/params/
 
-GEOIP2_DATABASE_DIR = f"{os.getcwd()}/data/GeoLite2-Country.mmdb"
+GEOIP2_DATABASE_DIR = f"{os.getcwd().rstrip('/src')}/data/GeoLite2-Country.mmdb"
 GEOIP_READER = geoip2.database.Reader(GEOIP2_DATABASE_DIR)
 TARGET_COUNTRY = "RU"
 
-TOP100_DIR = f"{os.getcwd()}/data/top100/"
+TOP100_DIR = f"{os.getcwd().rstrip('/src')}/data/top100/"
 
 
 def verify_ip_origin_country(ip_addr, target_c):
