@@ -22,7 +22,7 @@ within geographic regions and/or TLDS_
 
 ## Known Issues
 
-- Random User Agent Library is not currently showing in PyPi properly, manual installation may be required | https://github.com/Luqman-Ud-Din/random_user_agent
+- Random User Agent Library requires manual pip installation
 
 ## Installation
 
@@ -40,6 +40,11 @@ Install the requirements
 
 ```bash
 pip3 install -r requirements.txt
+```
+
+Install random-user-agent
+```bash
+pip3 install random-user-agent
 ```
 
 Run the script and view the usage page
