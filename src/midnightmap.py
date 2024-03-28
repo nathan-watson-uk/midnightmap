@@ -5,6 +5,7 @@ import csv
 import geoip2.database
 import geoip2.errors
 from duckduckgo_search import DDGS
+import webtech
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -309,5 +310,3 @@ def main():
 
 GEOIP_READER.close()
 
-if __name__ == "__main__":
-    main()
