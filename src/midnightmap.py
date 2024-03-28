@@ -41,13 +41,13 @@ def verify_ip_origin_country(ip_addr, target_c):
         return False
 
 
-def unpack_domains_from_csv(csv_file):
+def unpack_domains_from_txt(domain_file):
     domains = []
 
-    with open(csv_file, 'r', newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            domains.append(row["Domain"])
+    with open(domain_file, 'r', newline='') as textfile:
+
+        for row in textfile.readlines():
+            domains.append(row.rstrip("\n"))
 
     return domains
 
@@ -293,7 +293,7 @@ def main():
         # Return list of the top 100 domains for the TLD...
         # This will help remove social media and popular ecommerce sites etc
         # TODO Handle if file does not exist
-        top_domains = unpack_domains_from_csv(f"{TOP100_DIR}{site.lstrip('.')}.csv")
+        top_domains = unpack_domains_from_txt(f"{TOP100_DIR}{site.lstrip('.')}.csv")
 
         # Iterate through every domain and if it is a high ranking domain, remove it
         for domain in final_domain_list:
