@@ -2,5 +2,6 @@ requests>=2.31.0
 geoip2>=4.8.0
 duckduckgo_search>=4.5.0
 beautifulsoup4>=4.12.3
-pip~=23.2.1
+pip~=24.0
 attrs~=23.2.0
+webtech~=1.3.4
