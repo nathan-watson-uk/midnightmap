@@ -277,7 +277,7 @@ def main():
     # Generate custom url from CLI arguments
     custom_url = generate_start_url(query, query_variables=query_var_dict, url_variables=url_var_dict)
 
-    # Get DDG generated URL and first page HTML
+    # Get DDG generated URL for the next page and scrape first page HTML
     next_page_url, request_html = ddg_get_request(custom_url)
 
     # Extract the HTML for subsequent pages and compile HTML
@@ -287,8 +287,9 @@ def main():
     domain_list = extract_domains(compiled_html)
 
     # Urlparse and remove duplicate urls/domains
-    final_domain_list = clean_domain_names(domain_list)
+    domain_result_list = clean_domain_names(domain_list)
 
+    # If tld specified as an argument
     if site:
         # Return list of the top 100 domains for the TLD...
         # This will help remove social media and popular ecommerce sites etc
@@ -296,19 +297,26 @@ def main():
             top_domains = unpack_domains_from_txt(f"{TOP100_DIR}{site.lstrip('.')}.txt")
 
             # Iterate through domains and removes common ones to refine results
-            for domain in final_domain_list:
+            for domain in domain_result_list:
 
                 if domain in top_domains:
-                    final_domain_list.remove(domain)
+                    domain_result_list.remove(domain)
 
                 else:
                     continue
-        except FileNotFoundError:
-            print(final_domain_list)
-            print(f"Total Number of Unique Domains: {len(final_domain_list)}")
+        except FileNotFoundError as e:
+            print(f"---WARNING--- \n {e}")
 
-        print(final_domain_list)
-        print(f"Total Number of Unique Domains: {len(final_domain_list)}")
+        print(domain_result_list)
+        print(f"Total Number of Unique Domains: {len(domain_result_list)}")
+
+    else:
+        print(domain_result_list)
+        print(f"Total Number of Unique Domains: {len(domain_result_list)}")
 
 
 GEOIP_READER.close()
+
+
+if __name__ == "__main__":
+    main()
