@@ -1,7 +1,7 @@
 import os
 import getopt
 import sys
-import csv
+import warnings
 import geoip2.database
 import geoip2.errors
 from duckduckgo_search import DDGS
@@ -19,6 +19,9 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 software_names = [SoftwareName.CHROME.value]
 operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
 
+# Suppress RuntimeWarning from asyncio for Windows devices
+warnings.filterwarnings("ignore")
+
 user_agent_rotator = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
 
 # DuckDuckGo Advanced Search - https://duckduckgo.com/duckduckgo-help-pages/settings/params/
@@ -27,7 +30,7 @@ GEOIP2_DATABASE_DIR = f"{os.getcwd().rstrip('/src')}/data/GeoLite2-Country.mmdb"
 GEOIP_READER = geoip2.database.Reader(GEOIP2_DATABASE_DIR)
 TARGET_COUNTRY = "RU"
 
-TOP100_DIR = f"{os.getcwd().rstrip('/src')}/data/top100/"
+TOP100_DIR = f"{os.getcwd().rstrip('/src')}data/top100/"
 
 
 def verify_ip_origin_country(ip_addr, target_c):
@@ -254,9 +257,6 @@ def main():
         elif opt == "--kl":
             region = arg
 
-    # Checks if any of the required arguments are not supplied
-    print(f"Command Line Input: {sys.argv[1:]}")
-
     if any(var is None for var in (query, alpha2, page_iter)):
         print("Query and Alpha2 Code are Required, Use -h for more Information \n Exiting..."), sys.exit(2)
 
@@ -292,24 +292,23 @@ def main():
     if site:
         # Return list of the top 100 domains for the TLD...
         # This will help remove social media and popular ecommerce sites etc
-        # TODO Handle if file does not exist
-        top_domains = unpack_domains_from_txt(f"{TOP100_DIR}{site.lstrip('.')}.csv")
+        try:
+            top_domains = unpack_domains_from_txt(f"{TOP100_DIR}{site.lstrip('.')}.txt")
 
-        # Iterate through every domain and if it is a high ranking domain, remove it
-        for domain in final_domain_list:
+            # Iterate through domains and removes common ones to refine results
+            for domain in final_domain_list:
 
-            if domain in top_domains:
-                final_domain_list.remove(domain)
+                if domain in top_domains:
+                    final_domain_list.remove(domain)
 
-            else:
-                continue
+                else:
+                    continue
+        except FileNotFoundError:
+            print(final_domain_list)
+            print(f"Total Number of Unique Domains: {len(final_domain_list)}")
 
-    print(final_domain_list)
-    print(f"Total Number of Unique Domains: {len(final_domain_list)}")
+        print(final_domain_list)
+        print(f"Total Number of Unique Domains: {len(final_domain_list)}")
 
 
 GEOIP_READER.close()
-
-
-if __name__ == "__main__":
-    main()
