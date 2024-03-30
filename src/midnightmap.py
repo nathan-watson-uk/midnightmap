@@ -217,7 +217,7 @@ def get_web_technologies(d_list, query):
     wt = webtech.WebTech(options={"rua": True, "timeout": "5"})
 
     # Generate filename and join it with current directory
-    file_name = f"{query}{datetime.now().strftime("%m_%d_%H_%M_%S")}.txt".replace(" ", "_")
+    file_name = f"{query}{datetime.now().strftime("%d_%m_%H_%M_%S")}.txt".replace(" ", "_")
     file_path = os.path.join(os.getcwd(), file_name)
 
     # Create output file for the report using the query and datetime
@@ -342,6 +342,7 @@ def main():
         except FileNotFoundError as e:
             print(f"---WARNING--- \n {e}")
 
+    # Run web technology detection
     get_web_technologies(domain_result_list, original_query)
 
 
