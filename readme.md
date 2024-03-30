@@ -7,22 +7,25 @@ within geographic regions and/or TLDS_
 
 ## Current Features
 
-- DuckDuckGo Lite Search Integration
-- Removal of Common Domains for TLDs to refine results
+- Web technology Stack Analysis Output
+- Optimised DuckDuckGo Lite Search Integration
+- Removal of TLD Specific Common Domains to refine results
 - Country Based IP Address Checks / TLD Specification
 - Translation to Local Language
 - DuckDuckGo Advanced Search Capabilities
 
 ## Work In Progress
 
-- Website Tech Stack Analysis - Soon
 - Numerous TLDs in a Single Command
-- Compiled Results
 - Graphical Data Analytics
 
 ## Known Issues
 
-- Random User Agent Library requires manual pip installation
+- No currently known issues
+
+## Considerations
+
+- Random User Agent Library and Webtech requires manual pip installation
 
 ## Installation
 
@@ -45,6 +48,7 @@ pip3 install -r requirements.txt
 Install random-user-agent
 ```bash
 pip3 install random-user-agent
+pip3 install webtech
 ```
 
 Run the script and view the usage page
