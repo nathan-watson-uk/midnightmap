@@ -7,6 +7,7 @@ import geoip2.errors
 from duckduckgo_search import DDGS
 import webtech
 import webtech.utils
+import webtech.database
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -214,7 +215,7 @@ def ddg_get_loop_request(url, first_page_html, iterations):
 def get_web_technologies(d_list, query):
 
     # Create webtech object and set random user agent option
-    wt = webtech.WebTech(options={"rua": True, "timeout": "5"})
+    wt = webtech.WebTech(options={"ua": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36", "timeout": "5"})
 
     # Generate filename and join it with current directory
     file_name = f"{query}{datetime.now().strftime("%d_%m_%H_%M_%S")}.txt".replace(" ", "_")
@@ -341,6 +342,8 @@ def main():
                     continue
         except FileNotFoundError as e:
             print(f"---WARNING--- \n {e}")
+
+    webtech.database.update_database(force=True)
 
     # Run web technology detection
     get_web_technologies(domain_result_list, original_query)
