@@ -18,12 +18,14 @@ within geographic regions and/or TLDS_
 
 ## Work In Progress -
 
+- Replacing Webtech with Dynamic Content Loading Solution
 - Numerous TLDs in a Single Command
 - Graphical Data Analytics
 
 ## Known Issues -
 
 - Some web applications with WAFs are not showing tech stack results properly
+- Pages that require JS to load fully do not show all technologies
 
 ## Installation
 
