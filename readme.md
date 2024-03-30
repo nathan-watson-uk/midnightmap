@@ -21,7 +21,7 @@ within geographic regions and/or TLDS_
 
 ## Known Issues
 
-- No currently known issues
+- Some web applications with WAFs are not showing tech stack results properly
 
 ## Considerations
 
