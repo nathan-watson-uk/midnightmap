@@ -5,7 +5,7 @@ _A concept tool currently under development that provides intelligence into the 
 within geographic regions and/or TLDS_
 
 
-## Current Features
+## Current Features -
 
 - Web technology Stack Analysis Output
 - Optimised DuckDuckGo Lite Search Integration
@@ -13,19 +13,17 @@ within geographic regions and/or TLDS_
 - Country Based IP Address Checks / TLD Specification
 - Translation to Local Language
 - DuckDuckGo Advanced Search Capabilities
+- Same technology detection catalogue as Wappalyzer
+- DuckDuckGo Acts as a Privacy Based Proxy for Searches and Translations
 
-## Work In Progress
+## Work In Progress -
 
 - Numerous TLDs in a Single Command
 - Graphical Data Analytics
 
-## Known Issues
+## Known Issues -
 
 - Some web applications with WAFs are not showing tech stack results properly
-
-## Considerations
-
-- Random User Agent Library and Webtech requires manual pip installation
 
 ## Installation
 
@@ -39,24 +37,24 @@ git clone https://github.com/nathan-watson-uk/MidnightMap.git
 cd MidnightMap
 ```
 
-Install the requirements
+Install the requirements:
 
 ```bash
 pip3 install -r requirements.txt
 ```
 
-Install random-user-agent
+Install random-user-agent and webtech:
 ```bash
 pip3 install random-user-agent
 pip3 install webtech
 ```
 
-Run the script and view the usage page
+Run the script and view the usage page:
 ```bash
 python3 midnightmap.py -h
 ```
 
-## Disclaimer
+## Disclaimer -
 
 The MidnightMap tool is provided for educational and research purposes only. By using this tool, you acknowledge and agree that:
 
