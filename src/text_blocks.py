@@ -1,4 +1,4 @@
-midnight_logo = """
+midnight_logo = r"""
 ___  ____     _       _       _     _    ___  ___            
 |  \/  (_)   | |     (_)     | |   | |   |  \/  |            
 | .  . |_  __| |_ __  _  __ _| |__ | |_  | .  . | __ _ _ __  
@@ -7,9 +7,13 @@ ___  ____     _       _       _     _    ___  ___
 \_|  |_/_|\__,_|_| |_|_|\__, |_| |_|\__| \_|  |_/\__,_| .__/ 
                          __/ |                        | |    
                         |___/                         |_|    
+
+Uncover Industrial Scale Web Attack Surfaces
+
+Gain intelligence into the attack surface of web applications within geographic regions and/or TLDs.
 """
 
-cli_options = """
+cli_options = r"""
 
 ___  ____     _       _       _     _    ___  ___            
 |  \/  (_)   | |     (_)     | |   | |   |  \/  |            

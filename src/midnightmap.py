@@ -6,6 +6,8 @@ import geoip2.database
 import geoip2.errors
 from duckduckgo_search import DDGS
 import webtech
+import webtech.utils
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -26,11 +28,10 @@ user_agent_rotator = UserAgent(software_names=software_names, operating_systems=
 
 # DuckDuckGo Advanced Search - https://duckduckgo.com/duckduckgo-help-pages/settings/params/
 
-GEOIP2_DATABASE_DIR = f"{os.getcwd().rstrip('/src')}/data/GeoLite2-Country.mmdb"
-GEOIP_READER = geoip2.database.Reader(GEOIP2_DATABASE_DIR)
-TARGET_COUNTRY = "RU"
 
-TOP100_DIR = f"{os.getcwd().rstrip('/src')}data/top100/"
+GEOIP2_DATABASE_DIR = os.path.join(f"{os.getcwd().rstrip('/src')}", "data/GeoLite2-Country.mmdb")
+GEOIP_READER = geoip2.database.Reader(GEOIP2_DATABASE_DIR)
+TOP100_DIR = os.path.join(os.getcwd().rstrip("/src"), "data/top100/")
 
 
 def verify_ip_origin_country(ip_addr, target_c):
@@ -48,7 +49,6 @@ def unpack_domains_from_txt(domain_file):
     domains = []
 
     with open(domain_file, 'r', newline='') as textfile:
-
         for row in textfile.readlines():
             domains.append(row.rstrip("\n"))
 
@@ -111,7 +111,6 @@ def ddg_translate_query(query, lang):
 
 # Sends GET Request and Parses output to pull the HTML and
 def ddg_get_request(search_query):
-
     # Random User-Agent
     user_agent = user_agent_rotator.get_random_user_agent()
 
@@ -149,7 +148,6 @@ def ddg_get_request(search_query):
 
 
 def ddg_get_loop_request(url, first_page_html, iterations):
-
     compiled_parsed_html = [first_page_html]
 
     next_url = rf"https://lite.duckduckgo.com{url}"
@@ -213,7 +211,40 @@ def ddg_get_loop_request(url, first_page_html, iterations):
     return compiled_parsed_html
 
 
+def get_web_technologies(d_list, query):
+
+    # Create webtech object and set random user agent option
+    wt = webtech.WebTech(options={"rua": True, "timeout": "5"})
+
+    # Generate filename and join it with current directory
+    file_name = f"{query}{datetime.now().strftime("%m_%d_%H_%M_%S")}.txt".replace(" ", "_")
+    file_path = os.path.join(os.getcwd(), file_name)
+
+    # Create output file for the report using the query and datetime
+    with open(file_path, "w+") as output_file:
+        # Iterate through the domain list
+        for domain in d_list:
+            try:
+                # Generate webtech technology report and print to terminal
+                report = wt.start_from_url(f"https://{domain}")
+
+                # Write report output to file
+                output_file.write(f"{'='*20}\nREPORT FOR {domain}\n\n{report}\n\n")
+
+            # Handle connection and content-type errors
+            except webtech.utils.ConnectionException:
+                print(f"---WARNING---\nUnable to extract webtech from https://{domain} Connection Timeout\n")
+                output_file.write(f"{'='*20}\n\nUnable To Extract Webtech from https://{domain} \n\n\n")
+
+            except webtech.utils.WrongContentTypeException:
+                print(f"---WARNING---\nUnable to extract webtech from https://{domain} Wrong Content-Type\n ")
+                output_file.write(f"{'=' * 20}\n\nUnable To Extract Webtech from https://{domain} \n\n\n")
+
+    print(f"Report Output at: {file_path}\n")
+
+
 def main():
+    print(midnight_logo)
     # Create variables and set to None for later
     # tld from documentation is named site in the script for query generation
     query, page_iter, alpha2, site, region, translateto, inurl, intitle, filetype = None, None, None, None, None, None, None, None, None
@@ -271,6 +302,10 @@ def main():
         "filetype": filetype
     }
 
+    # Store original, untranslated query
+    original_query = query
+
+    # Translate text to specified language
     if translateto:
         query = ddg_translate_query(query, translateto)
 
@@ -307,16 +342,10 @@ def main():
         except FileNotFoundError as e:
             print(f"---WARNING--- \n {e}")
 
-        print(domain_result_list)
-        print(f"Total Number of Unique Domains: {len(domain_result_list)}")
-
-    else:
-        print(domain_result_list)
-        print(f"Total Number of Unique Domains: {len(domain_result_list)}")
+    get_web_technologies(domain_result_list, original_query)
 
 
 GEOIP_READER.close()
-
 
 if __name__ == "__main__":
     main()
